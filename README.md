@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/luchkonikita/yet-another-autocomplete.svg?branch=master)](https://travis-ci.org/luchkonikita/yet-another-autocomplete)
 
+[![npm version](https://badge.fury.io/js/yet-another-autocomplete.svg)](https://badge.fury.io/js/yet-another-autocomplete)
+
 This is the simplest possible autocomplete implementation.
 It handles just few things for you:
 - draws the suggestions box
