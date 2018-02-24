@@ -1,5 +1,7 @@
 # Yet Another Autocomplete 🙅‍♂️
 
+[![Build Status](https://travis-ci.org/luchkonikita/yet-another-autocomplete.svg?branch=master)](https://travis-ci.org/luchkonikita/yet-another-autocomplete)
+
 This is the simplest possible autocomplete implementation.
 It handles just few things for you:
 - draws the suggestions box
