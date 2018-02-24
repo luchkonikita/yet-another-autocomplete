@@ -18,7 +18,7 @@ yarn add yet-another-autocomplete
 
 ## Usage
 
-```
+```javascript
 import Autocomplete from 'yet-another-autocomplete'
 
 // Optionally require basic simple styles for the dialog.
