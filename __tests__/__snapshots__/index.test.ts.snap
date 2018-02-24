@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`initialization 1`] = `"<div class=\\"autocomplete_box\\" style=\\"position: absolute; display: none;\\"></div>"`;
+
+exports[`on input 1`] = `
+"<div class=\\"autocomplete_box\\" style=\\"position: absolute; display: block; top: 0px; left: 0px; right: 1024px;\\">
+      <div class=\\"autocomplete_box-item is-selected\\" data-value=\\"Andorra\\" data-text=\\"Andorra\\">
+        Andorra
+      </div>
+    
+
+      <div class=\\"autocomplete_box-item \\" data-value=\\"Angola\\" data-text=\\"Angola\\">
+        Angola
+      </div>
+    
+
+      <div class=\\"autocomplete_box-item \\" data-value=\\"Iceland\\" data-text=\\"Iceland\\">
+        Iceland
+      </div>
+    </div>"
+`;
+
+exports[`on keyboard navigation with ArrowDown 1`] = `
+"<div class=\\"autocomplete_box\\" style=\\"position: absolute; display: block; top: 0px; left: 0px; right: 1024px;\\">
+      <div class=\\"autocomplete_box-item \\" data-value=\\"Andorra\\" data-text=\\"Andorra\\">
+        Andorra
+      </div>
+    
+
+      <div class=\\"autocomplete_box-item is-selected\\" data-value=\\"Angola\\" data-text=\\"Angola\\">
+        Angola
+      </div>
+    
+
+      <div class=\\"autocomplete_box-item \\" data-value=\\"Iceland\\" data-text=\\"Iceland\\">
+        Iceland
+      </div>
+    </div>"
+`;
+
+exports[`on keyboard navigation with ArrowDown 2`] = `
+"<div class=\\"autocomplete_box\\" style=\\"position: absolute; display: block; top: 0px; left: 0px; right: 1024px;\\">
+      <div class=\\"autocomplete_box-item \\" data-value=\\"Andorra\\" data-text=\\"Andorra\\">
+        Andorra
+      </div>
+    
+
+      <div class=\\"autocomplete_box-item \\" data-value=\\"Angola\\" data-text=\\"Angola\\">
+        Angola
+      </div>
+    
+
+      <div class=\\"autocomplete_box-item is-selected\\" data-value=\\"Iceland\\" data-text=\\"Iceland\\">
+        Iceland
+      </div>
+    </div>"
+`;
+
+exports[`on keyboard navigation with ArrowDown 3`] = `
+"<div class=\\"autocomplete_box\\" style=\\"position: absolute; display: block; top: 0px; left: 0px; right: 1024px;\\">
+      <div class=\\"autocomplete_box-item is-selected\\" data-value=\\"Andorra\\" data-text=\\"Andorra\\">
+        Andorra
+      </div>
+    
+
+      <div class=\\"autocomplete_box-item \\" data-value=\\"Angola\\" data-text=\\"Angola\\">
+        Angola
+      </div>
+    
+
+      <div class=\\"autocomplete_box-item \\" data-value=\\"Iceland\\" data-text=\\"Iceland\\">
+        Iceland
+      </div>
+    </div>"
+`;
+
+exports[`on keyboard navigation with ArrowUp 1`] = `
+"<div class=\\"autocomplete_box\\" style=\\"position: absolute; display: block; top: 0px; left: 0px; right: 1024px;\\">
+      <div class=\\"autocomplete_box-item \\" data-value=\\"Andorra\\" data-text=\\"Andorra\\">
+        Andorra
+      </div>
+    
+
+      <div class=\\"autocomplete_box-item \\" data-value=\\"Angola\\" data-text=\\"Angola\\">
+        Angola
+      </div>
+    
+
+      <div class=\\"autocomplete_box-item is-selected\\" data-value=\\"Iceland\\" data-text=\\"Iceland\\">
+        Iceland
+      </div>
+    </div>"
+`;

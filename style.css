@@ -1,0 +1,16 @@
+.autocomplete_box {
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+}
+
+.autocomplete_box-item {
+  padding: 15px 20px;
+}
+
+.autocomplete_box-item + .autocomplete_box-item {
+  border-top: 1px solid #eaeaea;
+}
+
+.autocomplete_box-item.is-selected {
+  font-weight: 600;
+}
