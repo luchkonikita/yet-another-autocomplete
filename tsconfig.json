@@ -4,15 +4,17 @@
     "strictNullChecks": true,
     "inlineSourceMap": true,
     "inlineSources": true,
-    "module": "UMD",
+    "module": "commonjs",
     "allowJs": false,
     "target": "es5",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "types": [
       "jest"
     ]
   },
   "exclude": [
-    "./__tests__",
+    "./src/__tests__",
     "./node_modules"
   ]
 }

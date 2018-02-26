@@ -2,7 +2,7 @@
   "name": "yet-another-autocomplete",
   "version": "0.0.1",
   "description": "Yet another autocomplete for your browser JS",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/luchkonikita/yet-another-autocomplete"

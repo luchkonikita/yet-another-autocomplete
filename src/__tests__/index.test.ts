@@ -4,7 +4,7 @@ let input: HTMLInputElement
 let autocomplete: Autocomplete
 let autocompleteContainer: HTMLElement
 
-let options = [
+const options = [
   'Austria',
   'Australia',
   'Andorra',
@@ -30,7 +30,7 @@ beforeEach(() => {
   input.type = 'text'
   document.body.appendChild(input)
   autocomplete = new Autocomplete(input, { query, onSelect })
-  autocompleteContainer = document.querySelector('.autocomplete_box')
+  autocompleteContainer = document.querySelector('.autocomplete_box') as HTMLElement
 })
 
 afterEach(() => {
@@ -71,7 +71,7 @@ test('on keyboard navigation with Enter', () => {
   input.dispatchEvent(keyboardEvent('keyup', 'n'))
   input.dispatchEvent(keyboardEvent('keydown', 'Enter'))
 
-  expect(onSelect.mock.calls[0][0]).toEqual({ "text": "Andorra", "value": "Andorra" })
+  expect(onSelect.mock.calls[0][0]).toEqual({ text: 'Andorra', value: 'Andorra' })
   expect(input.value).toBe('Andorra')
   expect(autocompleteContainer.style.display).toBe('none')
 })
@@ -89,9 +89,10 @@ test('on item click', () => {
   input.dispatchEvent(keyboardEvent('keyup', 'n'))
 
   const clickEvent = new MouseEvent('click', { bubbles: true })
-  autocompleteContainer.querySelector('[data-value="Andorra"]').dispatchEvent(clickEvent)
+  const option = autocompleteContainer.querySelector('[data-value="Andorra"]') as HTMLElement
+  option.dispatchEvent(clickEvent)
 
-  expect(onSelect.mock.calls[0][0]).toEqual({ "text": "Andorra", "value": "Andorra" })
+  expect(onSelect.mock.calls[0][0]).toEqual({ text: 'Andorra', value: 'Andorra' })
   expect(input.value).toBe('Andorra')
   expect(autocompleteContainer.style.display).toBe('none')
 })
@@ -136,5 +137,6 @@ test('memoization', done => {
 test('destroy', () => {
   autocomplete.destroy()
 
-  expect(document.querySelector('.autocomplete_box')).toBeNull
+  autocompleteContainer = document.querySelector('.autocomplete_box') as HTMLElement
+  expect(autocompleteContainer).toBeNull()
 })
