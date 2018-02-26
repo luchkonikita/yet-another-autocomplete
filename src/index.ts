@@ -14,7 +14,8 @@ const CONTROL_KEYS: { [index: string]: boolean } = {
   ArrowUp: true,
   ArrowDown: true,
   Enter: true,
-  Escape: true
+  Escape: true,
+  Tab: true
 }
 
 export default class Autocomplete {
@@ -36,6 +37,7 @@ export default class Autocomplete {
     this.options = options
     this.input.addEventListener('keyup', this.handleKeyup)
     this.input.addEventListener('keydown', this.handleKeydown)
+    this.input.addEventListener('blur', this.handleBlur)
 
     this.container = this.initElement()
     this.container.addEventListener('click', this.handleClick)
@@ -142,7 +144,7 @@ export default class Autocomplete {
 
   private handleKeydown = (event: KeyboardEvent) => {
     if (!CONTROL_KEYS[event.key]) return
-    event.preventDefault()
+    if (event.key !== 'Tab') event.preventDefault()
 
     const lastIndex = this.results.length - 1
     const isLast = this.selectedItemIndex === lastIndex
@@ -161,6 +163,7 @@ export default class Autocomplete {
         this.handleSelect(this.results[this.selectedItemIndex])
         break
       case 'Escape':
+      case 'Tab':
         this.hide()
     }
   }
@@ -185,6 +188,11 @@ export default class Autocomplete {
     ) {
       this.hide()
     }
+  }
+
+  private handleBlur = (event: FocusEvent) => {
+    // Invoke with timeout, so clicks on autocomplete options will be handled.
+    setTimeout(() => this.hide(), 0)
   }
 
   private handleSelect = (result: QueryResult) => {

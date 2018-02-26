@@ -83,6 +83,28 @@ test('on keyboard navigation with Escape', () => {
   expect(autocompleteContainer.style.display).toBe('none')
 })
 
+test('on keyboard navigation with Tab', () => {
+  input.value = 'an'
+  input.dispatchEvent(keyboardEvent('keyup', 'n'))
+  input.dispatchEvent(keyboardEvent('keydown', 'Tab'))
+
+  expect(autocompleteContainer.style.display).toBe('none')
+})
+
+test('on blur', done => {
+  input.value = 'an'
+  input.dispatchEvent(keyboardEvent('keyup', 'n'))
+  expect(autocompleteContainer.style.display).toBe('block')
+
+  input.dispatchEvent(new Event('blur'))
+  expect(autocompleteContainer.style.display).toBe('block')
+
+  setTimeout(() => {
+    expect(autocompleteContainer.style.display).toBe('none')
+    done()
+  }, 10)
+})
+
 test('on item click', () => {
   input.value = 'an'
   input.dispatchEvent(keyboardEvent('keyup', 'n'))
