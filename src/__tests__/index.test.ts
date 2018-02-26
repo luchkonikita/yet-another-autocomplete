@@ -5,12 +5,12 @@ let autocomplete: Autocomplete
 let autocompleteContainer: HTMLElement
 
 const options = [
-  'Austria',
-  'Australia',
-  'Andorra',
-  'Angola',
-  'Congo',
-  'Iceland'
+  { text: 'Austria', value: '1' },
+  { text: 'Australia', value: '2' },
+  { text: 'Andorra', value: '3' },
+  { text: 'Angola', value: '4' },
+  { text: 'Congo', value: '5' },
+  { text: 'Iceland', value: '6' }
 ]
 
 let onSelect
@@ -22,8 +22,7 @@ beforeEach(() => {
   onSelect = jest.fn()
   query = jest.fn((term, setter) => {
     const results = options
-      .filter(option => option.toLowerCase().match(term.toLowerCase()))
-      .map(option => ({ text: option, value: option }))
+      .filter(option => option.text.toLowerCase().match(term.toLowerCase()))
     setter(results)
   })
   input = document.createElement('input')
@@ -71,7 +70,7 @@ test('on keyboard navigation with Enter', () => {
   input.dispatchEvent(keyboardEvent('keyup', 'n'))
   input.dispatchEvent(keyboardEvent('keydown', 'Enter'))
 
-  expect(onSelect.mock.calls[0][0]).toEqual({ text: 'Andorra', value: 'Andorra' })
+  expect(onSelect.mock.calls[0][0]).toEqual({ text: 'Andorra', value: '3' })
   expect(input.value).toBe('Andorra')
   expect(autocompleteContainer.style.display).toBe('none')
 })
@@ -89,10 +88,10 @@ test('on item click', () => {
   input.dispatchEvent(keyboardEvent('keyup', 'n'))
 
   const clickEvent = new MouseEvent('click', { bubbles: true })
-  const option = autocompleteContainer.querySelector('[data-value="Andorra"]') as HTMLElement
+  const option = autocompleteContainer.querySelector('[data-value="3"]') as HTMLElement
   option.dispatchEvent(clickEvent)
 
-  expect(onSelect.mock.calls[0][0]).toEqual({ text: 'Andorra', value: 'Andorra' })
+  expect(onSelect.mock.calls[0][0]).toEqual({ text: 'Andorra', value: '3' })
   expect(input.value).toBe('Andorra')
   expect(autocompleteContainer.style.display).toBe('none')
 })

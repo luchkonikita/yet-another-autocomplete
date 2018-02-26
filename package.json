@@ -1,6 +1,6 @@
 {
   "name": "yet-another-autocomplete",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Yet another autocomplete for your browser JS",
   "main": "./dist/index.js",
   "repository": {
@@ -16,6 +16,7 @@
     "dev": "tsc -p ./tsconfig.json -w",
     "build": "tsc -p ./tsconfig.json",
     "test": "jest --config .jest.json",
+    "test-update": "jest --config .jest.json -u",
     "lint": "tslint --project ./"
   },
   "dependencies": {},

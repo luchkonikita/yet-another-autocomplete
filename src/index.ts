@@ -191,7 +191,7 @@ export default class Autocomplete {
     this.options.onSelect
       ? this.options.onSelect(result)
       : console.warn('Autocomplete expects an "onSelect" option to be supplied')
-    this.input.value = result.value || ''
+    this.input.value = result.text || ''
     this.hide()
   }
 }
