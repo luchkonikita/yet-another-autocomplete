@@ -219,7 +219,6 @@ export default class Autocomplete {
   }
 
   private handleResize = () => {
-    if (this.debounce()) return
     this.positionContainer()
   }
 

@@ -133,8 +133,6 @@ var Autocomplete = /** @class */ (function () {
             _this.hide();
         };
         this.handleResize = function () {
-            if (_this.debounce())
-                return;
             _this.positionContainer();
         };
         this.input = element;
