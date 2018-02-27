@@ -85,8 +85,7 @@ export default class Autocomplete {
   // Rendering
   private positionContainer() {
     const elementRect = this.input.getBoundingClientRect()
-    const elementHeight = parseInt(getComputedStyle(this.input).height || '0', 10)
-    this.container.style.top = window.scrollY + elementRect.top + elementHeight + 'px'
+    this.container.style.top = window.pageYOffset + elementRect.top + elementRect.height + 'px'
     this.container.style.left = elementRect.left + 'px'
     this.container.style.right = window.innerWidth - elementRect.right + 'px'
   }

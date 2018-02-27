@@ -178,8 +178,7 @@ var Autocomplete = /** @class */ (function () {
     // Rendering
     Autocomplete.prototype.positionContainer = function () {
         var elementRect = this.input.getBoundingClientRect();
-        var elementHeight = parseInt(getComputedStyle(this.input).height || '0', 10);
-        this.container.style.top = window.scrollY + elementRect.top + elementHeight + 'px';
+        this.container.style.top = window.pageYOffset + elementRect.top + elementRect.height + 'px';
         this.container.style.left = elementRect.left + 'px';
         this.container.style.right = window.innerWidth - elementRect.right + 'px';
     };
