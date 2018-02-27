@@ -102,7 +102,30 @@ test('on blur', done => {
   setTimeout(() => {
     expect(autocompleteContainer.style.display).toBe('none')
     done()
-  }, 10)
+  }, 550)
+})
+
+test('on blur when focused back within a timeout', done => {
+  input.value = 'an'
+  input.dispatchEvent(keyboardEvent('keyup', 'n'))
+  expect(autocompleteContainer.style.display).toBe('block')
+
+  input.dispatchEvent(new Event('blur'))
+  expect(autocompleteContainer.style.display).toBe('block')
+
+  input.focus()
+
+  setTimeout(() => {
+    expect(autocompleteContainer.style.display).toBe('block')
+    done()
+  }, 550)
+})
+
+test('on focus', () => {
+  input.value = 'an'
+  input.dispatchEvent(new Event('focus'))
+
+  expect(autocompleteContainer.outerHTML).toMatchSnapshot()
 })
 
 test('on item click', () => {

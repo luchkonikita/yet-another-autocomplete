@@ -2,6 +2,24 @@
 
 exports[`initialization 1`] = `"<div class=\\"autocomplete_box\\" style=\\"position: absolute; display: none;\\"></div>"`;
 
+exports[`on focus 1`] = `
+"<div class=\\"autocomplete_box\\" style=\\"position: absolute; display: block; top: 0px; left: 0px; right: 1024px;\\">
+      <div class=\\"autocomplete_box-item is-selected\\" data-value=\\"3\\" data-text=\\"Andorra\\">
+        Andorra
+      </div>
+    
+
+      <div class=\\"autocomplete_box-item \\" data-value=\\"4\\" data-text=\\"Angola\\">
+        Angola
+      </div>
+    
+
+      <div class=\\"autocomplete_box-item \\" data-value=\\"6\\" data-text=\\"Iceland\\">
+        Iceland
+      </div>
+    </div>"
+`;
+
 exports[`on input 1`] = `
 "<div class=\\"autocomplete_box\\" style=\\"position: absolute; display: block; top: 0px; left: 0px; right: 1024px;\\">
       <div class=\\"autocomplete_box-item is-selected\\" data-value=\\"3\\" data-text=\\"Andorra\\">

@@ -2,8 +2,6 @@
   "compilerOptions": {
     "noStrictGenericChecks": true,
     "strictNullChecks": true,
-    "inlineSourceMap": true,
-    "inlineSources": true,
     "module": "commonjs",
     "allowJs": false,
     "target": "es5",

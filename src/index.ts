@@ -35,13 +35,13 @@ export default class Autocomplete {
   constructor(element: HTMLInputElement, options: IOptions = {}) {
     this.input = element
     this.options = options
+    this.container = this.initElement()
+
     this.input.addEventListener('keyup', this.handleKeyup)
     this.input.addEventListener('keydown', this.handleKeydown)
+    this.input.addEventListener('focus', this.handleFocus)
     this.input.addEventListener('blur', this.handleBlur)
-
-    this.container = this.initElement()
     this.container.addEventListener('click', this.handleClick)
-
     document.addEventListener('click', this.handleClickOutside)
   }
 
@@ -49,6 +49,8 @@ export default class Autocomplete {
     if (this.destroyed) return
     this.input.removeEventListener('keyup', this.handleKeyup)
     this.input.removeEventListener('keydown', this.handleKeydown)
+    this.input.removeEventListener('focus', this.handleFocus)
+    this.input.removeEventListener('blur', this.handleKeydown)
     document.removeEventListener('click', this.handleClickOutside)
     document.body.removeChild(this.container)
     this.destroyed = true
@@ -191,8 +193,17 @@ export default class Autocomplete {
   }
 
   private handleBlur = (event: FocusEvent) => {
-    // Invoke with timeout, so clicks on autocomplete options will be handled.
-    setTimeout(() => this.hide(), 0)
+    // A workaround for iOS safari inputs switcher, which works as Tab keypress,
+    // but does not trigger that event.
+    setTimeout(() => {
+      if (document.activeElement !== this.input) this.hide()
+    }, 500)
+  }
+
+  private handleFocus = (event: FocusEvent) => {
+    if (this.input.value) {
+      this.getResults(this.input.value)
+    }
   }
 
   private handleSelect = (result: QueryResult) => {
