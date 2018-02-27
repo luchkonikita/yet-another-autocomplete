@@ -43,6 +43,7 @@ export default class Autocomplete {
     this.input.addEventListener('blur', this.handleBlur)
     this.container.addEventListener('click', this.handleClick)
     document.addEventListener('click', this.handleClickOutside)
+    window.addEventListener('resize', this.handleResize)
   }
 
   public destroy() {
@@ -53,6 +54,7 @@ export default class Autocomplete {
     this.input.removeEventListener('blur', this.handleKeydown)
     document.removeEventListener('click', this.handleClickOutside)
     document.body.removeChild(this.container)
+    window.removeEventListener('resize', this.handleResize)
     this.destroyed = true
   }
 
@@ -107,8 +109,14 @@ export default class Autocomplete {
       this.results = currentResults
       this.show()
     } else {
+      this.resetResults()
       this.hide()
     }
+  }
+
+  private resetResults = () => {
+    this.selectedItemIndex = 0
+    this.results = []
   }
 
   private getResults = (term: string) => {
@@ -129,14 +137,10 @@ export default class Autocomplete {
   // Events
   private handleKeyup = (event: KeyboardEvent) => {
     if (CONTROL_KEYS[event.key]) return
-
-    if (this.debounceTimeout) return
-    this.debounceTimeout = setTimeout(() => {
-      if (this.debounceTimeout) clearTimeout(this.debounceTimeout)
-      this.debounceTimeout = undefined
-    }, this.debounceTime)
+    if (this.debounce()) return
 
     if (!this.input.value) {
+      this.resetResults()
       this.hide()
       return
     }
@@ -206,11 +210,27 @@ export default class Autocomplete {
     }
   }
 
-  private handleSelect = (result: QueryResult) => {
-    this.options.onSelect
-      ? this.options.onSelect(result)
-      : console.warn('Autocomplete expects an "onSelect" option to be supplied')
-    this.input.value = result.text || ''
+  private handleSelect = (result?: QueryResult) => {
+    if (this.options.onSelect && result) {
+      this.options.onSelect(result)
+      this.input.value = result.text || ''
+    }
     this.hide()
+  }
+
+  private handleResize = () => {
+    if (this.debounce()) return
+    this.positionContainer()
+  }
+
+  // Misc
+
+  private debounce() {
+    if (this.debounceTimeout) return true
+    this.debounceTimeout = setTimeout(() => {
+      if (this.debounceTimeout) clearTimeout(this.debounceTimeout)
+      this.debounceTimeout = undefined
+    }, this.debounceTime)
+    return false
   }
 }

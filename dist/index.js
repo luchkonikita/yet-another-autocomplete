@@ -34,8 +34,13 @@ var Autocomplete = /** @class */ (function () {
                 _this.show();
             }
             else {
+                _this.resetResults();
                 _this.hide();
             }
+        };
+        this.resetResults = function () {
+            _this.selectedItemIndex = 0;
+            _this.results = [];
         };
         this.getResults = function (term) {
             if (!_this.options.query) {
@@ -55,14 +60,10 @@ var Autocomplete = /** @class */ (function () {
         this.handleKeyup = function (event) {
             if (CONTROL_KEYS[event.key])
                 return;
-            if (_this.debounceTimeout)
+            if (_this.debounce())
                 return;
-            _this.debounceTimeout = setTimeout(function () {
-                if (_this.debounceTimeout)
-                    clearTimeout(_this.debounceTimeout);
-                _this.debounceTimeout = undefined;
-            }, _this.debounceTime);
             if (!_this.input.value) {
+                _this.resetResults();
                 _this.hide();
                 return;
             }
@@ -125,11 +126,16 @@ var Autocomplete = /** @class */ (function () {
             }
         };
         this.handleSelect = function (result) {
-            _this.options.onSelect
-                ? _this.options.onSelect(result)
-                : console.warn('Autocomplete expects an "onSelect" option to be supplied');
-            _this.input.value = result.text || '';
+            if (_this.options.onSelect && result) {
+                _this.options.onSelect(result);
+                _this.input.value = result.text || '';
+            }
             _this.hide();
+        };
+        this.handleResize = function () {
+            if (_this.debounce())
+                return;
+            _this.positionContainer();
         };
         this.input = element;
         this.options = options;
@@ -140,6 +146,7 @@ var Autocomplete = /** @class */ (function () {
         this.input.addEventListener('blur', this.handleBlur);
         this.container.addEventListener('click', this.handleClick);
         document.addEventListener('click', this.handleClickOutside);
+        window.addEventListener('resize', this.handleResize);
     }
     Autocomplete.prototype.destroy = function () {
         if (this.destroyed)
@@ -150,6 +157,7 @@ var Autocomplete = /** @class */ (function () {
         this.input.removeEventListener('blur', this.handleKeydown);
         document.removeEventListener('click', this.handleClickOutside);
         document.body.removeChild(this.container);
+        window.removeEventListener('resize', this.handleResize);
         this.destroyed = true;
     };
     // Lifecycle
@@ -176,6 +184,18 @@ var Autocomplete = /** @class */ (function () {
         this.container.style.top = window.scrollY + elementRect.top + elementHeight + 'px';
         this.container.style.left = elementRect.left + 'px';
         this.container.style.right = window.innerWidth - elementRect.right + 'px';
+    };
+    // Misc
+    Autocomplete.prototype.debounce = function () {
+        var _this = this;
+        if (this.debounceTimeout)
+            return true;
+        this.debounceTimeout = setTimeout(function () {
+            if (_this.debounceTimeout)
+                clearTimeout(_this.debounceTimeout);
+            _this.debounceTimeout = undefined;
+        }, this.debounceTime);
+        return false;
     };
     return Autocomplete;
 }());
