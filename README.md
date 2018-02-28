@@ -11,6 +11,7 @@ It handles just few things for you:
 - selects item by `Enter` or by clicking it
 - closes the dialog on `Escape` keypress
 - debounces input events a little bit
+- caches results
 
 All the rest you can do on your own 😉
 
@@ -44,7 +45,8 @@ const autocomplete = new Autocomplete(this.el.querySelector('input[type="text"]'
   onSelect: (value) => {
     // You receive a selected result in the same `{text, value}` form.
     // Do something with the selected value here...
-  }
+  },
+  disableCaching: true // By default caching results by term is enabled, and can be disabled by this flag
 })
 
 // Destroy when not needed anymore.

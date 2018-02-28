@@ -7,7 +7,8 @@ type SelectHandler = (result: QueryResult) => any
 
 interface IOptions {
   query?: QueryHandler,
-  onSelect?: SelectHandler
+  onSelect?: SelectHandler,
+  disableCaching?: boolean
 }
 
 const CONTROL_KEYS: { [index: string]: boolean } = {
@@ -123,7 +124,7 @@ export default class Autocomplete {
       throw new Error('Autocomplete expects a "query" option to be supplied')
     }
 
-    if (this.resultsCache[term]) {
+    if (this.resultsCache[term] && !this.options.disableCaching) {
       this.showResults()
     } else {
       this.options.query(term, (results: QueryResult[]) => {

@@ -46,7 +46,7 @@ var Autocomplete = /** @class */ (function () {
             if (!_this.options.query) {
                 throw new Error('Autocomplete expects a "query" option to be supplied');
             }
-            if (_this.resultsCache[term]) {
+            if (_this.resultsCache[term] && !_this.options.disableCaching) {
                 _this.showResults();
             }
             else {
