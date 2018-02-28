@@ -178,6 +178,20 @@ test('memoization', done => {
   }, 110)
 })
 
+test('disabled memoization', done => {
+  autocomplete.destroy()
+  autocomplete = new Autocomplete(input, { query, onSelect, disableCaching: true })
+  input.value = 'an'
+  input.dispatchEvent(keyboardEvent('keyup', 'n'))
+
+  setTimeout(() => {
+    input.value = 'an'
+    input.dispatchEvent(keyboardEvent('keyup', 'n'))
+    expect(query.mock.calls).toHaveLength(2)
+    done()
+  }, 110)
+})
+
 test('destroy', () => {
   autocomplete.destroy()
 
