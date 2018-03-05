@@ -121,9 +121,7 @@ var Autocomplete = /** @class */ (function () {
             }, 500);
         };
         this.handleFocus = function (event) {
-            if (_this.input.value) {
-                _this.getResults(_this.input.value);
-            }
+            _this.getResults(_this.input.value);
         };
         this.handleSelect = function (result) {
             if (_this.options.onSelect && result) {

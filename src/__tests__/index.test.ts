@@ -128,6 +128,13 @@ test('on focus', () => {
   expect(autocompleteContainer.outerHTML).toMatchSnapshot()
 })
 
+test('on focus with empty term', () => {
+  input.value = ''
+  input.dispatchEvent(new Event('focus'))
+
+  expect(query.mock.calls.length).toBe(1);
+})
+
 test('on item click', () => {
   input.value = 'an'
   input.dispatchEvent(keyboardEvent('keyup', 'n'))

@@ -205,9 +205,7 @@ export default class Autocomplete {
   }
 
   private handleFocus = (event: FocusEvent) => {
-    if (this.input.value) {
-      this.getResults(this.input.value)
-    }
+    this.getResults(this.input.value)
   }
 
   private handleSelect = (result?: QueryResult) => {
