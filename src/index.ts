@@ -13,9 +13,12 @@ interface IOptions {
 
 const CONTROL_KEYS: { [index: string]: boolean } = {
   ArrowUp: true,
+  Up: true,
   ArrowDown: true,
+  Down: true,
   Enter: true,
   Escape: true,
+  Esc: true,
   Tab: true
 }
 
@@ -159,10 +162,12 @@ export default class Autocomplete {
 
     switch (event.key) {
       case 'ArrowDown':
+      case 'Down':
         this.selectedItemIndex = isLast ? 0 : this.selectedItemIndex + 1
         this.render()
         break
       case 'ArrowUp':
+      case 'Up':
         this.selectedItemIndex = isFirst ? lastIndex : this.selectedItemIndex - 1
         this.render()
         break
@@ -170,6 +175,7 @@ export default class Autocomplete {
         this.handleSelect(this.results[this.selectedItemIndex])
         break
       case 'Escape':
+      case 'Esc':
       case 'Tab':
         this.hide()
     }

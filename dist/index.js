@@ -2,9 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var CONTROL_KEYS = {
     ArrowUp: true,
+    Up: true,
     ArrowDown: true,
+    Down: true,
     Enter: true,
     Escape: true,
+    Esc: true,
     Tab: true
 };
 var Autocomplete = /** @class */ (function () {
@@ -79,10 +82,12 @@ var Autocomplete = /** @class */ (function () {
             var isFirst = _this.selectedItemIndex === 0;
             switch (event.key) {
                 case 'ArrowDown':
+                case 'Down':
                     _this.selectedItemIndex = isLast ? 0 : _this.selectedItemIndex + 1;
                     _this.render();
                     break;
                 case 'ArrowUp':
+                case 'Up':
                     _this.selectedItemIndex = isFirst ? lastIndex : _this.selectedItemIndex - 1;
                     _this.render();
                     break;
@@ -90,6 +95,7 @@ var Autocomplete = /** @class */ (function () {
                     _this.handleSelect(_this.results[_this.selectedItemIndex]);
                     break;
                 case 'Escape':
+                case 'Esc':
                 case 'Tab':
                     _this.hide();
             }
@@ -195,12 +201,7 @@ var Autocomplete = /** @class */ (function () {
         }
         var distanceToTop = Math.abs(itemTopOffset - scrollTop);
         var distanceToBottom = Math.abs(scrollBottom - itemBottomOffset);
-        if (distanceToTop < distanceToBottom) {
-            this.container.scrollTop = itemTopOffset;
-        }
-        else {
-            this.container.scrollTop = itemBottomOffset - height;
-        }
+        this.container.scrollTop = (distanceToTop < distanceToBottom) ? itemTopOffset : itemBottomOffset - height;
     };
     // Misc
     Autocomplete.prototype.debounce = function () {
