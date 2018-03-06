@@ -77,6 +77,7 @@ export default class Autocomplete {
 
   private render() {
     this.container.innerHTML = this.results.map(this.renderItem).join('\n')
+    this.scrollToSelected()
   }
 
   private hide = () => {
@@ -218,6 +219,29 @@ export default class Autocomplete {
 
   private handleResize = () => {
     this.positionContainer()
+  }
+
+  private scrollToSelected () {
+    const selectedItem = this.container.children[this.selectedItemIndex] as HTMLElement
+
+    const height = this.container.offsetHeight
+    const scrollTop = this.container.scrollTop
+    const scrollBottom = scrollTop + height
+
+    const itemHeight = selectedItem.offsetHeight
+    const itemTopOffset = selectedItem.offsetTop
+    const itemBottomOffset = itemTopOffset + itemHeight
+
+    const isInViewPort = scrollTop <= itemTopOffset && scrollBottom >= itemBottomOffset
+
+    if (isInViewPort) {
+      return
+    }
+
+    const distanceToTop = Math.abs(itemTopOffset - scrollTop)
+    const distanceToBottom = Math.abs(scrollBottom - itemBottomOffset)
+
+    this.container.scrollTop = (distanceToTop < distanceToBottom) ? itemTopOffset : itemBottomOffset - height
   }
 
   // Misc

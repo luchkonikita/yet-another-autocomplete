@@ -172,6 +172,7 @@ var Autocomplete = /** @class */ (function () {
     };
     Autocomplete.prototype.render = function () {
         this.container.innerHTML = this.results.map(this.renderItem).join('\n');
+        this.scrollToSelected();
     };
     // Rendering
     Autocomplete.prototype.positionContainer = function () {
@@ -179,6 +180,27 @@ var Autocomplete = /** @class */ (function () {
         this.container.style.top = window.pageYOffset + elementRect.top + elementRect.height + 'px';
         this.container.style.left = elementRect.left + 'px';
         this.container.style.right = window.innerWidth - elementRect.right + 'px';
+    };
+    Autocomplete.prototype.scrollToSelected = function () {
+        var selectedItem = this.container.children[this.selectedItemIndex];
+        var height = this.container.offsetHeight;
+        var scrollTop = this.container.scrollTop;
+        var scrollBottom = scrollTop + height;
+        var itemHeight = selectedItem.offsetHeight;
+        var itemTopOffset = selectedItem.offsetTop;
+        var itemBottomOffset = itemTopOffset + itemHeight;
+        var isInViewPort = scrollTop <= itemTopOffset && scrollBottom >= itemBottomOffset;
+        if (isInViewPort) {
+            return;
+        }
+        var distanceToTop = Math.abs(itemTopOffset - scrollTop);
+        var distanceToBottom = Math.abs(scrollBottom - itemBottomOffset);
+        if (distanceToTop < distanceToBottom) {
+            this.container.scrollTop = itemTopOffset;
+        }
+        else {
+            this.container.scrollTop = itemBottomOffset - height;
+        }
     };
     // Misc
     Autocomplete.prototype.debounce = function () {
