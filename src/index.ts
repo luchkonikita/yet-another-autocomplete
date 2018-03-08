@@ -13,9 +13,12 @@ interface IOptions {
 
 const CONTROL_KEYS: { [index: string]: boolean } = {
   ArrowUp: true,
+  Up: true,
   ArrowDown: true,
+  Down: true,
   Enter: true,
   Escape: true,
+  Esc: true,
   Tab: true
 }
 
@@ -77,6 +80,7 @@ export default class Autocomplete {
 
   private render() {
     this.container.innerHTML = this.results.map(this.renderItem).join('\n')
+    this.scrollToSelected()
   }
 
   private hide = () => {
@@ -158,10 +162,12 @@ export default class Autocomplete {
 
     switch (event.key) {
       case 'ArrowDown':
+      case 'Down':
         this.selectedItemIndex = isLast ? 0 : this.selectedItemIndex + 1
         this.render()
         break
       case 'ArrowUp':
+      case 'Up':
         this.selectedItemIndex = isFirst ? lastIndex : this.selectedItemIndex - 1
         this.render()
         break
@@ -169,6 +175,7 @@ export default class Autocomplete {
         this.handleSelect(this.results[this.selectedItemIndex])
         break
       case 'Escape':
+      case 'Esc':
       case 'Tab':
         this.hide()
     }
@@ -218,6 +225,29 @@ export default class Autocomplete {
 
   private handleResize = () => {
     this.positionContainer()
+  }
+
+  private scrollToSelected () {
+    const selectedItem = this.container.children[this.selectedItemIndex] as HTMLElement
+
+    const height = this.container.offsetHeight
+    const scrollTop = this.container.scrollTop
+    const scrollBottom = scrollTop + height
+
+    const itemHeight = selectedItem.offsetHeight
+    const itemTopOffset = selectedItem.offsetTop
+    const itemBottomOffset = itemTopOffset + itemHeight
+
+    const isInViewPort = scrollTop <= itemTopOffset && scrollBottom >= itemBottomOffset
+
+    if (isInViewPort) {
+      return
+    }
+
+    const distanceToTop = Math.abs(itemTopOffset - scrollTop)
+    const distanceToBottom = Math.abs(scrollBottom - itemBottomOffset)
+
+    this.container.scrollTop = (distanceToTop < distanceToBottom) ? itemTopOffset : itemBottomOffset - height
   }
 
   // Misc

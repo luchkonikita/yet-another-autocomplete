@@ -2,9 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var CONTROL_KEYS = {
     ArrowUp: true,
+    Up: true,
     ArrowDown: true,
+    Down: true,
     Enter: true,
     Escape: true,
+    Esc: true,
     Tab: true
 };
 var Autocomplete = /** @class */ (function () {
@@ -79,10 +82,12 @@ var Autocomplete = /** @class */ (function () {
             var isFirst = _this.selectedItemIndex === 0;
             switch (event.key) {
                 case 'ArrowDown':
+                case 'Down':
                     _this.selectedItemIndex = isLast ? 0 : _this.selectedItemIndex + 1;
                     _this.render();
                     break;
                 case 'ArrowUp':
+                case 'Up':
                     _this.selectedItemIndex = isFirst ? lastIndex : _this.selectedItemIndex - 1;
                     _this.render();
                     break;
@@ -90,6 +95,7 @@ var Autocomplete = /** @class */ (function () {
                     _this.handleSelect(_this.results[_this.selectedItemIndex]);
                     break;
                 case 'Escape':
+                case 'Esc':
                 case 'Tab':
                     _this.hide();
             }
@@ -172,6 +178,7 @@ var Autocomplete = /** @class */ (function () {
     };
     Autocomplete.prototype.render = function () {
         this.container.innerHTML = this.results.map(this.renderItem).join('\n');
+        this.scrollToSelected();
     };
     // Rendering
     Autocomplete.prototype.positionContainer = function () {
@@ -179,6 +186,22 @@ var Autocomplete = /** @class */ (function () {
         this.container.style.top = window.pageYOffset + elementRect.top + elementRect.height + 'px';
         this.container.style.left = elementRect.left + 'px';
         this.container.style.right = window.innerWidth - elementRect.right + 'px';
+    };
+    Autocomplete.prototype.scrollToSelected = function () {
+        var selectedItem = this.container.children[this.selectedItemIndex];
+        var height = this.container.offsetHeight;
+        var scrollTop = this.container.scrollTop;
+        var scrollBottom = scrollTop + height;
+        var itemHeight = selectedItem.offsetHeight;
+        var itemTopOffset = selectedItem.offsetTop;
+        var itemBottomOffset = itemTopOffset + itemHeight;
+        var isInViewPort = scrollTop <= itemTopOffset && scrollBottom >= itemBottomOffset;
+        if (isInViewPort) {
+            return;
+        }
+        var distanceToTop = Math.abs(itemTopOffset - scrollTop);
+        var distanceToBottom = Math.abs(scrollBottom - itemBottomOffset);
+        this.container.scrollTop = (distanceToTop < distanceToBottom) ? itemTopOffset : itemBottomOffset - height;
     };
     // Misc
     Autocomplete.prototype.debounce = function () {
