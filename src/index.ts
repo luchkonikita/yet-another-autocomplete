@@ -143,12 +143,6 @@ export default class Autocomplete {
     if (CONTROL_KEYS[event.key]) return
     if (this.debounce()) return
 
-    if (!this.input.value) {
-      this.resetResults()
-      this.hide()
-      return
-    }
-
     this.getResults(this.input.value)
   }
 

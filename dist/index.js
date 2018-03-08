@@ -65,11 +65,6 @@ var Autocomplete = /** @class */ (function () {
                 return;
             if (_this.debounce())
                 return;
-            if (!_this.input.value) {
-                _this.resetResults();
-                _this.hide();
-                return;
-            }
             _this.getResults(_this.input.value);
         };
         this.handleKeydown = function (event) {
